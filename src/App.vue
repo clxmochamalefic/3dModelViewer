@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <RotateBox />
+    <ModelViewer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 // import HelloWorld from './components/HelloWorld.vue';
-import RotateBox from './components/RotateBox.vue';
+// import RotateBox from './components/RotateBox.vue';
+import ModelViewer from './components/ModelViewer.vue';
 
 @Component({
   components: {
-    RotateBox,
+    ModelViewer,
   },
 })
 export default class App extends Vue {
@@ -27,6 +27,8 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+body {
+  margin: 0;
 }
 </style>
