@@ -5,6 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 @Component
 export default class ModelViewer extends Vue {
@@ -42,9 +43,23 @@ export default class ModelViewer extends Vue {
         canvas: $canvas as HTMLCanvasElement,
       });
 
-      this.camera.position.set(0, 0, 2);
+      this.camera.position.set(0, 0, 10);
       this.light.position.set(0, 0, 10);
-      this.scene.add(this.cube);
+
+      const gltfLoader = new GLTFLoader();
+      // gltfLoader.load('./../assets/models/house_map.bin', (gltf) => {
+      // gltfLoader.load('/src/assets/models/house_map.gltf', (gltf) => {
+      gltfLoader.load('/threeAssets/house_map.gltf', (gltf) => {
+        this.scene.add(gltf.scene);
+      }, (xhr) => {
+        const loaded = (xhr.loaded / xhr.total) * 100;
+        console.log(`${loaded}% loaded`);
+      }, (error) => {
+        console.error('An error happened');
+        console.error(error);
+      });
+
+      // this.scene.add(this.cube);
       this.scene.add(this.light);
 
       this.animate();
@@ -52,9 +67,6 @@ export default class ModelViewer extends Vue {
 
     public animate() {
       requestAnimationFrame(this.animate);
-
-      this.cube.rotation.x += 0.02;
-      this.cube.rotation.y += 0.02;
 
       if (this.renderer != null) {
         this.renderer.render(this.scene, this.camera);
